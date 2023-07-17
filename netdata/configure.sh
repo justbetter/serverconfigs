@@ -59,11 +59,10 @@ cp /usr/lib/netdata/conf.d/health_alarm_notify.conf "$config_dir"
 # Set Slack
 if [ -n "$slack_url" ]; then
     echo "Setting Slack webhook"
-    sed -i '' "s|SLACK_WEBHOOK_URL=.*|SLACK_WEBHOOK_URL=\"$slack_url\"|" "$config_dir/health_alarm_notify.conf"
-    sed -i '' "s|SEND_SLACK=.*|SEND_SLACK=YES|" "$config_dir/health_alarm_notify.conf"
-    sed -i '' "s|DEFAULT_RECIPIENT_SLACK=.*|DEFAULT_RECIPIENT_SLACK=\"#netdata\"|" "$config_dir/health_alarm_notify.conf"
+    sed -i "s|SLACK_WEBHOOK_URL=.*|SLACK_WEBHOOK_URL=\"$slack_url\"|" "$config_dir/health_alarm_notify.conf"
+    sed -i "s|SEND_SLACK=.*|SEND_SLACK=\"YES\"|" "health_alarm_notify.conf"
+    sed -i "s|DEFAULT_RECIPIENT_SLACK=.*|DEFAULT_RECIPIENT_SLACK=\"#netdata\"|" "$config_dir/health_alarm_notify.conf"
 fi
-
 
 echo "Netdata installation and configuration completed successfully!"
 
