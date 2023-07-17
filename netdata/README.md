@@ -13,12 +13,6 @@ Then, run the `configure.sh` script, it will ask for a Slack webhook URL and app
 You can run the `configure.sh` script without interactions by providing the necessary arguments via the command line:
 
 ```sh
-sh install.sh "<Slack URL>"
-```
-
-### Directly from Github
-
-```sh
 wget -O - https://raw.githubusercontent.com/justbetter/serverconfigs/main/netdata/configure.sh | bash -s "<Slack URL>"
 ```
 

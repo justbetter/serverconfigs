@@ -52,6 +52,7 @@ echo "Using configuration directory $config_dir"
 cp -r "$tmp_dir/netdata/health.d" $config_dir
 cp -r "$tmp_dir/netdata/go.d" $config_dir
 
+cd "$config_dir"
 rm -rf "$tmp_dir"
 
 cp /usr/lib/netdata/conf.d/health_alarm_notify.conf "$config_dir"
