@@ -1,21 +1,27 @@
 # JB Netdata Installation Script
 
-This script installs and configures Netdata.
+This script configures Netdata.
 
 
 ## Usage
 
-Run the `install.sh` script, it will ask for the Netdata wget install command which you can find in Netdata Cloud.
+Install Netdata normallly.
+Then, run the `configure.sh` script, it will ask for a Slack webhook URL.
 
 
 ### Run without interaction
 
-You can run the `install.sh` script without interactions by providing the necessary arguments via the command line:
+You can run the `configure.sh` script without interactions by providing the necessary arguments via the command line:
 
 ```sh
-sh install.sh "<wget command>" "<Slack URL>"
+sh install.sh "<Slack URL>"
 ```
 
+### Directly from Github
+
+```sh
+wget -O - https://raw.githubusercontent.com/justbetter/serverconfigs/main/netdata/install.sh | bash -s "<Slack URL>"
+```
 
 ## Additional configuration
 

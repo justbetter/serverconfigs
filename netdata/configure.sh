@@ -8,16 +8,10 @@ echo " /\__/ / |_| \__ \ |_| |_/ /  __/ |_| ||  __/ |   "
 echo " \____/ \____|___/\__\____/ \___|\__|\__\___|_|   "
 echo "                                                 "
 echo "                                                 "
-echo "Netdata Install Script"
+echo "Netdata Configuration Script"
 
 if [[ -n "$1" ]]; then
-    wget_command="$1"
-else
-    read -p "Please enter the wget install command for Netdata: " wget_command
-fi
-
-if [[ -n "$2" ]]; then
-    slack_url="$2"
+    slack_url="$1"
 else
     read -p "Please enter the Slack webhook URL: " slack_url
 fi
@@ -32,12 +26,9 @@ cd "$tmp_dir"
 git sparse-checkout set --no-cone netdata
 git checkout
 
-# Install Netdata
-eval "$wget_command"
-
 # Setup the config
 
-directories=("/etc/netdata" "/opt/netdata/etc/netdata" $3)
+directories=("/etc/netdata" "/opt/netdata/etc/netdata" $2)
 
 # Setup the config
 config_dir=""
@@ -88,7 +79,6 @@ if command -v mysql &> /dev/null; then
 else
     echo "MySQL not installed"
 fi
-
 
 echo "Restarting Netdata"
 service netdata restart
