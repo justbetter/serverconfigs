@@ -6,8 +6,7 @@ This script configures Netdata.
 ## Usage
 
 Install Netdata normallly.
-Then, run the `configure.sh` script, it will ask for a Slack webhook URL.
-
+Then, run the `configure.sh` script, it will ask for a Slack webhook URL and apply the configurations in this repo.
 
 ### Run without interaction
 
@@ -20,7 +19,7 @@ sh install.sh "<Slack URL>"
 ### Directly from Github
 
 ```sh
-wget -O - https://raw.githubusercontent.com/justbetter/serverconfigs/main/netdata/install.sh | bash -s "<Slack URL>"
+wget -O - https://raw.githubusercontent.com/justbetter/serverconfigs/main/netdata/configure.sh | bash -s "<Slack URL>"
 ```
 
 ## Additional configuration

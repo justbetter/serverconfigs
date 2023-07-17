@@ -54,10 +54,14 @@ cp -r "$tmp_dir/netdata/go.d" $config_dir
 
 rm -rf "$tmp_dir"
 
+cp /usr/lib/netdata/conf.d/health_alarm_notify.conf "$config_dir"
+
 # Set Slack
 if [ -n "$slack_url" ]; then
     echo "Setting Slack webhook"
-    sed -i '' "s|SLACK_WEBHOOK_URL=.*|SLACK_WEBHOOK_URL=\"$slack_url\"|" "$config_dir/netdata.conf"
+    sed -i '' "s|SLACK_WEBHOOK_URL=.*|SLACK_WEBHOOK_URL=\"$slack_url\"|" "$config_dir/health_alarm_notify.conf"
+    sed -i '' "s|SEND_SLACK=.*|SEND_SLACK=YES|" "$config_dir/health_alarm_notify.conf"
+    sed -i '' "s|DEFAULT_RECIPIENT_SLACK=.*|DEFAULT_RECIPIENT_SLACK=\"#netdata\"|" "$config_dir/health_alarm_notify.conf"
 fi
 
 
