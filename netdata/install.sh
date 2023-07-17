@@ -10,11 +10,6 @@ echo "                                                 "
 echo "                                                 "
 echo "Netdata Install Script"
 
-if [ "$(id -u)" -ne 0 ]; then
-        echo 'This script must be run by root' >&2
-        exit 1
-fi
-
 if [[ -n "$1" ]]; then
     wget_command="$1"
 else
@@ -24,8 +19,18 @@ fi
 if [[ -n "$2" ]]; then
     slack_url="$2"
 else
-    read -p "Please enter the Slack URL: " slack_url
+    read -p "Please enter the Slack webhook URL: " slack_url
 fi
+
+tmp_dir="/tmp/netdata_install"
+
+# Gather latest configuration files
+rm -rf "$tmp_dir"
+mkdir "$tmp_dir"
+git clone -n --depth=1 --filter=tree:0 https://github.com/justbetter/serverconfigs.git "$tmp_dir"
+cd "$tmp_dir"
+git sparse-checkout set --no-cone netdata
+git checkout
 
 # Install Netdata
 eval "$wget_command"
@@ -53,8 +58,8 @@ fi
 
 echo "Using configuration directory $config_dir"
 
-cp -r ./health.d $config_dir
-cp -r ./go.d $config_dir
+cp -r "$tmp_dir/netdata/health.d" $config_dir
+cp -r "$tmp_dir/netdata/go.d" $config_dir
 
 
 # Set Slack
@@ -63,8 +68,6 @@ if [ -n "$slack_url" ]; then
     sed -i '' "s|SLACK_WEBHOOK_URL=.*|SLACK_WEBHOOK_URL=\"$slack_url\"|" "$config_dir/netdata.conf"
 fi
 
-
-# TODO Reload Netdata
 
 echo "Netdata installation and configuration completed successfully!"
 
