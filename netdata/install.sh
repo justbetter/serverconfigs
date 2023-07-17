@@ -61,6 +61,7 @@ echo "Using configuration directory $config_dir"
 cp -r "$tmp_dir/netdata/health.d" $config_dir
 cp -r "$tmp_dir/netdata/go.d" $config_dir
 
+rm -rf "$tmp_dir"
 
 # Set Slack
 if [ -n "$slack_url" ]; then
