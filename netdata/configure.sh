@@ -111,7 +111,7 @@ do
             echo "    socket: '/tmp/fpm-status-$path'" >> $netdataFpmConfigFile
         done
 
-        service php-$version-fpm restart
+        service php$version-fpm restart
     fi
 done
 
