@@ -105,7 +105,7 @@ do
             confPath="/etc/php/$version/fpm/pool.d/$confFile"
 
             sed -i -E "s/;?(pm\.status_path\s*=\s*\/status)/\1/" "$confPath"
-            sed -i -E "s/;?(pm\.status_listen\s*=\s*127\.0\.0\.1:9001)/pm.status_listen = \/tmp\/fpm-status-$version-$path/" "$confPath"
+            sed -i -E "s/;?(pm\.status_listen.*)/pm\.status_listen = \/tmp\/fpm-status-$version-$path/" "$confPath"
 
             echo "  - name: $version-$path" >> $netdataFpmConfigFile
             echo "    socket: '/tmp/fpm-status-$version-$path'" >> $netdataFpmConfigFile
