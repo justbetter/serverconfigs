@@ -84,5 +84,35 @@ else
     echo "MySQL not installed"
 fi
 
+echo "Configuring FPM status"
+
+fpmDirectories=$(ls -d /etc/php/8*/)
+netdataFpmConfigFile="$config_dir/go.d/phpfpm.conf"
+
+echo "jobs:" > $netdataFpmConfigFile
+
+for dir in $fpmDirectories
+do
+    if [ -d "$dir" ]; then
+        version=$(basename "$dir")
+        echo "Configuring FPM status for PHP version $version"
+
+        configurations=$(ls -f "/etc/php/$version/fpm/pool.d" | grep -vE '^\.{1,2}$')
+
+        for confFile in $configurations
+        do
+            path=$(basename "$confFile" .conf)
+            confPath="/etc/php/$version/fpm/pool.d/$confFile"
+
+            sed -i -E "s/;?(pm\.status_path\s*=\s*\/status)/\1/" "$confPath"
+            sed -i -E "s/;?(pm\.status_listen\s*=\s*127\.0\.0\.1:9001)/pm.status_listen = \/tmp\/fpm-status-$path/" "$confPath"
+
+            echo "  - name: $path" >> $netdataFpmConfigFile
+            echo "    socket: '/tmp/fpm-status-$path'" >> $netdataFpmConfigFile
+        done
+
+    fi
+done
+
 echo "Restarting Netdata"
 service netdata restart
