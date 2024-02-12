@@ -104,11 +104,15 @@ do
             path=$(basename "$confFile" .conf)
             confPath="/etc/php/$version/fpm/pool.d/$confFile"
 
-            sed -i -E "s/;?(pm\.status_path\s*=\s*\/status)/\1/" "$confPath"
-            sed -i -E "s/;?(pm\.status_listen.*)/pm\.status_listen = \/tmp\/fpm-status-$version-$path/" "$confPath"
+            if [ "$confFile" != "www.conf" ]; then
+                sed -i -E "s/;?(pm\.status_path\s*=\s*\/status)/\1/" "$confPath"
+                sed -i -E "s/;?(pm\.status_listen.*)/pm\.status_listen = \/tmp\/fpm-status-$version-$path/" "$confPath"
 
-            echo "  - name: $version-$path" >> $netdataFpmConfigFile
-            echo "    socket: '/tmp/fpm-status-$version-$path'" >> $netdataFpmConfigFile
+                echo "  - name: $version-$path" >> $netdataFpmConfigFile
+                echo "    socket: '/tmp/fpm-status-$version-$path'" >> $netdataFpmConfigFile
+            else
+                sed -i -E '/pm\.status_path|pm\.status_listen/s/^/; /' "$confPath"
+            fi
         done
 
         service php$version-fpm restart
