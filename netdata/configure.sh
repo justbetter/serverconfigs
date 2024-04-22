@@ -65,6 +65,19 @@ if [ -n "$slack_url" ]; then
     sed -i "s|DEFAULT_RECIPIENT_SLACK=.*|DEFAULT_RECIPIENT_SLACK=\"#netdata\"|" "$config_dir/health_alarm_notify.conf"
 fi
 
+# Enable web interface
+HOSTNAME=$(hostname)
+
+if grep -q "\[web\]" "$config_dir/netdata.conf"; then
+  sed -i "s|# bind to.*|bind to = unix:/var/run/netdata/netdata.sock|" "$config_dir/netdata.conf"
+else
+  echo "[web]" >  "$config_dir/netdata.conf"
+  echo "  bind to = unix:/var/run/netdata/netdata.sock" >  "$config_dir/netdata.conf"
+fi
+
+# Disable cloud
+sed -i "s|enabled.*|enabled = no|" "$config_dir/../../var/lib/netdata/cloud.d/cloud.conf"
+
 echo "Netdata installation and configuration completed successfully!"
 
 if command -v mysql &> /dev/null; then
