@@ -71,8 +71,8 @@ HOSTNAME=$(hostname)
 if grep -q "\[web\]" "$config_dir/netdata.conf"; then
   sed -i "s|# bind to.*|bind to = unix:/var/run/netdata/netdata.sock|" "$config_dir/netdata.conf"
 else
-  echo "[web]" >  "$config_dir/netdata.conf"
-  echo "  bind to = unix:/var/run/netdata/netdata.sock" >  "$config_dir/netdata.conf"
+  echo "[web]" >>  "$config_dir/netdata.conf"
+  echo "  bind to = unix:/var/run/netdata/netdata.sock" >>  "$config_dir/netdata.conf"
 fi
 
 # Disable cloud
