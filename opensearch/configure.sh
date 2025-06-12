@@ -36,8 +36,8 @@ OPENSEARCH_WEB_PASSWORD_HASH=$(docker compose exec opensearch /usr/share/opensea
 echo "OPENSEARCH_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD}" >> .env
 echo "OPENSEARCH_WEB_PASSWORD=${OPENSEARCH_WEB_PASSWORD}" >> .env
 
-sed -i "" "s#ADMIN_PASSWORD_REPLACEME#${OPENSEARCH_ADMIN_PASSWORD_HASH}#" opensearch-security/internal_users.yml
-sed -i "" "s#WEB_PASSWORD_REPLACEME#${OPENSEARCH_WEB_PASSWORD_HASH}#" opensearch-security/internal_users.yml
+sed -i "s#ADMIN_PASSWORD_REPLACEME#${OPENSEARCH_ADMIN_PASSWORD_HASH}#" opensearch-security/internal_users.yml
+sed -i "s#WEB_PASSWORD_REPLACEME#${OPENSEARCH_WEB_PASSWORD_HASH}#" opensearch-security/internal_users.yml
 
 docker compose up -d --wait --force-recreate
 docker compose exec opensearch /usr/share/opensearch/plugins/opensearch-security/tools/securityadmin.sh \
