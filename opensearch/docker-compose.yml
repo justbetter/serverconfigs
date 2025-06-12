@@ -12,7 +12,7 @@ services:
       - "DISABLE_INSTALL_DEMO_CONFIG=true"
     healthcheck:
       test: ["CMD", "curl", "-f", "-u", "admin:${OPENSEARCH_ADMIN_PASSWORD}", "http://localhost:9200/_cluster/health"]
-      interval: 5s
+      interval: 30s
       timeout: 30s
       retries: 3
     ulimits:
@@ -31,6 +31,7 @@ services:
       - ./opensearch-security/action_groups.yml:/usr/share/opensearch/action_groups.yml
       - ./opensearch-security/tenants.yml:/usr/share/opensearch/tenants.yml
       - ./opensearch-security/nodes_dn.yml:/usr/share/opensearch/nodes_dn.yml
+      - ./opensearch-security/whitelist.yml:/usr/share/opensearch/whitelist.yml
 
       - ./opensearch.yml:/usr/share/opensearch/config/opensearch.yml
       

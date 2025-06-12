@@ -12,8 +12,6 @@ openssl req -new -x509 -sha256 -key ./ssl/root-ca-key.pem -subj "/C=CA/ST=NOORD-
 openssl x509 -req -in ./ssl/esnode.csr -CA ./ssl/root-ca.pem -CAkey ./ssl/root-ca-key.pem -CAcreateserial -sha256 -out ./ssl/esnode.pem -days 358000
 
 mkdir data
-chown -R 1000:1000 ssl opensearch-security data
-chown 1000:1000 opensearch.yml
 
 sed -i "s/plugins.security.ssl.http.enabled: false/plugins.security.ssl.http.enabled: true/" opensearch.yml
 
@@ -44,6 +42,7 @@ sed -i "s#ADMIN_PASSWORD_REPLACEME#${OPENSEARCH_ADMIN_PASSWORD_HASH}#" opensearc
 sed -i "s#WEB_PASSWORD_REPLACEME#${OPENSEARCH_WEB_PASSWORD_HASH}#" opensearch-security/internal_users.yml
 
 docker compose up -d --wait --force-recreate
+sleep 10
 docker compose exec opensearch /usr/share/opensearch/plugins/opensearch-security/tools/securityadmin.sh \
     -icl \
     -nhnv \
