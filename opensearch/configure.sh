@@ -13,7 +13,7 @@ openssl x509 -req -in ./ssl/esnode.csr -CA ./ssl/root-ca.pem -CAkey ./ssl/root-c
 
 sed -i "s/plugins.security.ssl.http.enabled: false/plugins.security.ssl.http.enabled: true/" opensearch.yml
 
-if dpkg-query -W elasticsearch > /dev/null 2>&1;
+if netstat -tulpn | grep 9200 > /dev/null 2>&1;
 then
     echo "Elasticsearch is also installed! Moving opensearch to port 9201";
     sed -i 's/9200:9200/9201:9200/' docker-compose.yml;
