@@ -21,7 +21,7 @@ then
     sed -i 's/9200:9200/9201:9200/' docker-compose.yml;
 fi
 
-docker compose up -d --wait
+docker compose up -d
 
 if [ -f .env ]; then
     echo "env is already generated"
@@ -29,6 +29,7 @@ if [ -f .env ]; then
     docker compose restart opensearch
     exit 1
 fi
+sleep 10
 
 OPENSEARCH_ADMIN_PASSWORD=$(openssl rand -base64 20 | tr -dc '[:alnum:]')
 OPENSEARCH_WEB_PASSWORD=$(openssl rand -base64 20 | tr -dc '[:alnum:]')
@@ -41,7 +42,7 @@ echo "OPENSEARCH_WEB_PASSWORD=${OPENSEARCH_WEB_PASSWORD}" >> .env
 sed -i "s#ADMIN_PASSWORD_REPLACEME#${OPENSEARCH_ADMIN_PASSWORD_HASH}#" opensearch-security/internal_users.yml
 sed -i "s#WEB_PASSWORD_REPLACEME#${OPENSEARCH_WEB_PASSWORD_HASH}#" opensearch-security/internal_users.yml
 
-docker compose up -d --wait --force-recreate
+docker compose up -d --force-recreate
 sleep 10
 docker compose exec opensearch /usr/share/opensearch/plugins/opensearch-security/tools/securityadmin.sh \
     -icl \
