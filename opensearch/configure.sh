@@ -11,6 +11,10 @@ openssl req -new -x509 -sha256 -key ./ssl/root-ca-key.pem -subj "/C=CA/ST=NOORD-
 [ ! -f ./ssl/esnode.csr ] && openssl req -new -key ./ssl/esnode-key.pem -subj "/C=CA/ST=NOORD-HOLLAND/L=ALKMAAR/O=ORG/OU=UNIT/CN=A" -out ./ssl/esnode.csr
 openssl x509 -req -in ./ssl/esnode.csr -CA ./ssl/root-ca.pem -CAkey ./ssl/root-ca-key.pem -CAcreateserial -sha256 -out ./ssl/esnode.pem -days 358000
 
+mkdir data
+chown -R 1000:1000 ssl opensearch-security data
+chown 1000:1000 opensearch.yml
+
 sed -i "s/plugins.security.ssl.http.enabled: false/plugins.security.ssl.http.enabled: true/" opensearch.yml
 
 if netstat -tulpn | grep 9200 > /dev/null 2>&1;
