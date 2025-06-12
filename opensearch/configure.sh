@@ -43,7 +43,7 @@ sed -i "s#ADMIN_PASSWORD_REPLACEME#${OPENSEARCH_ADMIN_PASSWORD_HASH}#" opensearc
 sed -i "s#WEB_PASSWORD_REPLACEME#${OPENSEARCH_WEB_PASSWORD_HASH}#" opensearch-security/internal_users.yml
 
 docker compose up -d --force-recreate
-sleep 10
+run: for i in {1..15}; do [[ docker compose exec opensearch curl https://localhost:9200 -k ]] && break || sleep 5; done
 docker compose exec opensearch /usr/share/opensearch/plugins/opensearch-security/tools/securityadmin.sh \
     -icl \
     -nhnv \
