@@ -1,6 +1,6 @@
 services:
   opensearch:
-    image: opensearchproject/opensearch:latest
+    image: opensearchproject/opensearch:${OPENSEARCH_TAG:-2}
     container_name: opensearch
     restart: unless-stopped
     environment:
@@ -37,4 +37,4 @@ services:
       - ./ssl/esnode-key.pem:/usr/share/opensearch/config/esnode-key.pem
       - ./ssl/root-ca.pem:/usr/share/opensearch/config/root-ca.pem
     ports:
-      - 9201:9200
+      - 9200:9200
