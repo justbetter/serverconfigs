@@ -1,0 +1,16 @@
+network.host: 0.0.0.0
+http.port: 9200
+
+discovery.type: single-node
+# When disabling this see: https://docs.opensearch.org/docs/2.19/install-and-configure/install-opensearch/debian/#configure-a-user 
+plugins.security.disabled: false
+plugins.security.ssl.transport.pemcert_filepath: /usr/share/opensearch/config/esnode.pem
+plugins.security.ssl.transport.pemkey_filepath: /usr/share/opensearch/config/esnode-key.pem
+plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/opensearch/config/root-ca.pem
+plugins.security.ssl.http.enabled: false
+plugins.security.ssl.http.pemcert_filepath: /usr/share/opensearch/config/esnode.pem
+plugins.security.ssl.http.pemkey_filepath: /usr/share/opensearch/config/esnode-key.pem
+plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/opensearch/config/root-ca.pem
+plugins.security.ssl.transport.enforce_hostname_verification: false
+plugins.security.authcz.admin_dn:
+  - 'CN=A,OU=UNIT,O=ORG,L=ALKMAAR,ST=NOORD-HOLLAND,C=CA'

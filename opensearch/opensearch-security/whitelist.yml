@@ -1,0 +1,22 @@
+---
+_meta:
+  type: "whitelist"
+  config_version: 2
+
+# Description:
+# enabled - feature flag.
+# if enabled is false, the whitelisting feature is removed.
+# This is like removing the check that checks if an API is whitelisted.
+# This is equivalent to continuing with the usual access control checks, and removing all the code that implements whitelisting.
+# if enabled is true, then all users except SuperAdmin can access only the APIs in requests
+# SuperAdmin can access all APIs.
+# SuperAdmin is defined by the SuperAdmin certificate, which is configured in the opensearch.yml setting: plugins.security.authcz.admin_dn:
+# Refer to the example setting in opensearch.yml.example, and the opendistro documentation to know more about configuring SuperAdmin.
+#
+# requests - map of whitelisted endpoints, and the whitelisted HTTP requests for those endpoints
+
+# Examples showing how to configure this yml file (make sure the _meta data from above is also there):
+# Example 1:
+# To enable whitelisting and whitelist GET /_cluster/settings
+#
+config:

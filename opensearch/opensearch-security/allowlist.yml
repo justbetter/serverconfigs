@@ -1,0 +1,18 @@
+---
+_meta:
+  type: "allowlist"
+  config_version: 2
+
+# Description:
+# enabled - feature flag.
+# if enabled is false, the allowlisting feature is removed.
+# This is like removing the check that checks if an API is allowlisted.
+# This is equivalent to continuing with the usual access control checks, and removing all the code that implements allowlisting.
+# if enabled is true, then all users except SuperAdmin can access only the APIs in requests
+# SuperAdmin can access all APIs.
+# SuperAdmin is defined by the SuperAdmin certificate, which is configured in the opensearch.yml setting: plugins.security.authcz.admin_dn:
+# Refer to the example setting in opensearch.yml.example, and the opendistro documentation to know more about configuring SuperAdmin.
+#
+# requests - map of allowlisted endpoints, and the allowlisted HTTP requests for those endpoints
+config:
+  enabled: false

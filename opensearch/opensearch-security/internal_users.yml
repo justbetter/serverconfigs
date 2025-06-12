@@ -1,0 +1,23 @@
+---
+# This is the internal user database
+# The hash value is a bcrypt hash and can be generated with plugin/tools/hash.sh
+
+_meta:
+  type: "internalusers"
+  config_version: 2
+
+# Define your internal users here
+
+admin:
+  hash: "ADMIN_PASSWORD_REPLACEME"
+  reserved: true
+  backend_roles:
+  - "admin"
+  description: "admin user"
+
+web:
+  hash: "WEB_PASSWORD_REPLACEME"
+  reserved: true
+  backend_roles:
+  - "rapidez"
+  description: "Public web user"

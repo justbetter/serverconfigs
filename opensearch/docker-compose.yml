@@ -1,0 +1,40 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch
+    restart: unless-stopped
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx2g"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "admin:${OPENSEARCH_ADMIN_PASSWORD}", "http://localhost:9200/_cluster/health"]
+      interval: 5s
+      timeout: 30s
+      retries: 3
+    ulimits:
+      memlock:
+        soft: -1 # Set memlock to unlimited (no soft or hard limit)
+        hard: -1
+      nofile:
+        soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
+        hard: 65536
+    volumes:
+      - ./data:/usr/share/opensearch/data
+      - ./opensearch-security/config.yml:/usr/share/opensearch/config.yml
+      - ./opensearch-security/roles.yml:/usr/share/opensearch/roles.yml
+      - ./opensearch-security/roles_mapping.yml:/usr/share/opensearch/roles_mapping.yml
+      - ./opensearch-security/internal_users.yml:/usr/share/opensearch/internal_users.yml
+      - ./opensearch-security/action_groups.yml:/usr/share/opensearch/action_groups.yml
+      - ./opensearch-security/tenants.yml:/usr/share/opensearch/tenants.yml
+      - ./opensearch-security/nodes_dn.yml:/usr/share/opensearch/nodes_dn.yml
+
+      - ./opensearch.yml:/usr/share/opensearch/config/opensearch.yml
+      
+      - ./ssl/esnode.pem:/usr/share/opensearch/config/esnode.pem
+      - ./ssl/esnode-key.pem:/usr/share/opensearch/config/esnode-key.pem
+      - ./ssl/root-ca.pem:/usr/share/opensearch/config/root-ca.pem
+    ports:
+      - 9201:9200
