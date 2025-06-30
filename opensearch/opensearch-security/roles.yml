@@ -105,8 +105,22 @@ query_insights_full_access:
 
 rapidez:
   reserved: false
+  cluster_permissions:
+    - "indices:data/read/msearch"
+    - "indices:data/read/msearch/template"
   index_permissions:
     - index_patterns:
         - 'rapidez_*'
-    - allowed_actions:
-        - "read"
+      allowed_actions:
+        - "indices:data/read/scroll"
+        - "indices:data/read/scroll/clear"
+        - "indices:data/read/mget"
+        - "indices:data/read/mget*"
+        - "indices:data/read/search"
+        - "indices:data/read/search*"
+        - "indices:data/read/msearch"
+        - "indices:data/read/msearch/template"
+        - "indices:data/read/search/template"
+        - "indices:data/read/mtv"
+        - "indices:data/read/mtv*"
+        - "indices:data/read/search/template/render*"
