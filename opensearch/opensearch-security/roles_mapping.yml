@@ -21,6 +21,14 @@ own_index:
   - "*"
   description: "Allow full access to an index named like the username"
 
+rapidez:
+  reserved: false
+  users:
+  - "web"
+  backend_roles:
+  - "rapidez"
+  description: "Allow read only access to indexes prefixed with rapidez_"
+
 readall:
   reserved: false
   backend_roles:
