@@ -108,6 +108,7 @@ rapidez:
   cluster_permissions:
     - "indices:data/read/msearch"
     - "indices:data/read/msearch/template"
+    - "cluster:admin/opensearch/ml/predict"
   index_permissions:
     - index_patterns:
         - 'rapidez_*'
